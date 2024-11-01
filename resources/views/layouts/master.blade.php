@@ -95,13 +95,15 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="/dish" class="nav-link">
+                                    <a href="/dish"
+                                        class="nav-link {{ Request::segment(1) == 'dish' ? 'active' : '' }}">
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Dishes</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/order" class="nav-link">
+                                    <a href="/order"
+                                        class="nav-link {{ Request::segment(1) == 'order' ? 'active' : '' }}">
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Order</p>
                                     </a>
@@ -191,8 +193,6 @@
             }
         });
     </script>
-    <!--end::OverlayScrollbars Configure-->
-    <!--end::Script-->
 </body>
 <!--end::Body-->
 

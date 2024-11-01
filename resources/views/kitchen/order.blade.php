@@ -1,26 +1,72 @@
 @extends('layouts.master')
 
 @section('content')
-    <!--begin::App Main-->
-    <main class="app-main">
-        <!--begin::App Content Header-->
-        <div class="app-content-header">
-            <!--begin::Container-->
-            <div class="container-fluid">
-                <!--begin::Row-->
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h3 class="mb-0">Kitchen Panel</h3>
-                    </div>
+    <section class="content mt-4">
+        <div class="container-fluid">
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
                 </div>
-                <!--end::Row-->
+            @endif
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Order List</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="dish" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Dish Name</th>
+                                        <th>Table Number</th>
+                                        <th>Order ID</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($orders as $order)
+                                        <tr>
+                                            <td>{{ $order->dishes->dish_name }}</td>
+                                            <td>{{ $order->table_id }}</td>
+                                            <td>{{ $order->order_id }}</td>
+                                            <td>
+                                                {{ $status[$order->status] }}
+                                            </td>
+                                            <td>
+                                                <a href="/order/{{ $order->id }}/approve"
+                                                    class="btn btn-warning">Approve</a>
+                                                <a href="/order/{{ $order->id }}/cancel"
+                                                    class="btn btn-danger">Cancel</a>
+                                                <a href="/order/{{ $order->id }}/ready" class="btn btn-success">Ready</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
             </div>
-            <!--end::Container-->
         </div>
-        <!--end::App Content Header-->
-        <!--begin::App Content-->
-
-        <!--end::App Content-->
-    </main>
-    <!--end::App Main-->
+    </section>
 @endsection
+<script src="/plugins/jquery/jquery.min.js"></script>
+<script>
+    $(function() {
+        $('#dish').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "pageLength": 10,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    });
+</script>
